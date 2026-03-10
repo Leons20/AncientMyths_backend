@@ -1,1 +1,1 @@
-# AncientMyths_backend
+Backend repozitorij projekta za kolegij Web aplikacije
