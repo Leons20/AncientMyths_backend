@@ -10,11 +10,11 @@ async function connectToDatabase() {
     try {
         const client = new MongoClient(mongoURI);
         await client.connect();
-        console.log(`Uspješno spajanje na bazu podataka ${db_name}`);
+        console.log(`Successful connection to database ${db_name}`);
         let db = client.db(db_name);
         return db;
     } catch (error) {
-        console.error("Greška prilikom spajanja na bazu podataka", error);
+        console.error("Error on connecting to database", error);
         throw error;
     }
 }

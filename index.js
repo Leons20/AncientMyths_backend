@@ -8,7 +8,7 @@ import mythRoutes from "./routes/mythRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 let db = await connectToDatabase();
 
@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, (error) => {
     if (error) {
-        console.log("Greška prilikom pokretanja servera", error);
+        console.log("Error on starting the server", error);
     }
-    console.log(`Server radi na http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
