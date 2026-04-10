@@ -25,6 +25,6 @@ router.delete("/favorites/:mythId", auth, removeFavorite);
 
 router.get("/stats", auth, admin, getStats);
 
-router.delete("/:id", auth, deleteUser);
+router.delete("/:id", auth, admin, deleteUser);
 
 export default router;

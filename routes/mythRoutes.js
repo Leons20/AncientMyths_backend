@@ -14,7 +14,7 @@ import admin from "../middleware/adminMiddleware.js";
 const router = express.Router();
 
 router.get("/", getMyths);
-router.get("/:id", auth, getMyth);
+router.get("/:id", getMyth);
 
 router.post("/", auth, createMyth);
 router.put("/:id", auth, admin, updateMyth);
