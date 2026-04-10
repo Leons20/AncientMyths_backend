@@ -103,7 +103,21 @@ export const createMyth = async (req, res) => {
     };
 
     try {
-        await myths.insertOne(newMyth);
+        const result = await myths.insertOne(newMyth);
+
+        const createdMyth = {
+            _id: result.insertedId,
+            title: newMyth.title,
+            mythology: newMyth.mythology,
+            mythText: newMyth.mythText,
+            interpretation: newMyth.interpretation,
+            image: newMyth.image,
+            link: newMyth.link,
+            ratings: [],
+            isDefault: false,
+        };
+
+        res.status(201).json(createdMyth);
     } catch (err) {
         if (err.code === 11000) {
             return res.status(400).json({ message: "Myth already exists" });
@@ -111,8 +125,6 @@ export const createMyth = async (req, res) => {
         console.error(err);
         return res.status(500).json({ message: "Server error" });
     }
-
-    res.json({ message: "Created" });
 };
 
 export const updateMyth = async (req, res) => {
