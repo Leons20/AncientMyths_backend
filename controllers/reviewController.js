@@ -77,23 +77,34 @@ export const addReview = async (req, res) => {
 };
 
 export const deleteReview = async (req, res) => {
-    const reviews = req.db.collection("reviews");
+    try {
+        const reviews = req.db.collection("reviews");
 
-    const review = await reviews.findOne({
-        _id: new ObjectId(req.params.id),
-    });
+        if (!ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: "Invalid review id" });
+        }
 
-    if (!review) {
-        return res.status(404).json({ message: "Review not found" });
+        const reviewId = new ObjectId(req.params.id);
+
+        const review = await reviews.findOne({
+            _id: reviewId,
+        });
+
+        if (!review) {
+            return res.status(404).json({ message: "Review not found" });
+        }
+
+        if (req.user.role !== "admin") {
+            return res.status(403).json({ message: "Forbidden" });
+        }
+
+        await reviews.deleteOne({
+            _id: reviewId,
+        });
+
+        res.json({ message: "Review deleted" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to delete review" });
     }
-
-    if (req.user.role !== "admin") {
-        return res.status(403).json({ message: "Forbidden" });
-    }
-
-    await reviews.deleteOne({
-        _id: new ObjectId(req.params.id),
-    });
-
-    res.json({ message: "Review deleted" });
 };

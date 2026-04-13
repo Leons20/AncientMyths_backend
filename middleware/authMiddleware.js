@@ -14,6 +14,7 @@ export default function (req, res, next) {
 
         req.user = {
             _id: decoded.id,
+            username: decoded.username,
             role: decoded.role,
         };
 
